@@ -5,16 +5,16 @@
     padding-top: 20px; /* Add some space at the top */
   }
 
-  .audio-container {
+  .file-container {
     display: flex; /* Use flexbox layout */
     flex-wrap: wrap; /* Allow cards to wrap to the next line */
     justify-content: center; /* Center align cards horizontally */
     gap: 20px; /* Add space between cards */
   }
 
-  .audio-card {
-    width: 100%;
-    max-width: 400px; /* Limit card width */
+  .file-card {
+    width: calc(50% - 20px); /* Two cards per row */
+    max-width: 300px; /* Limit card width */
     height: 200px;
     background-color: #f8f9fa; /* Light background color */
     border-radius: 10px; /* Rounded corners */
@@ -28,33 +28,39 @@
     cursor: pointer;
   }
 
-  .audio-card:hover {
+  .file-card:hover {
     transform: translateY(-5px); /* Lift card up on hover */
   }
 
-  .audio-title {
+  .file-title {
     font-size: 1.2em; /* Title font size */
     margin-bottom: 10px; /* Bottom margin for title */
   }
 
-  .audio-link {
+  .file-link {
     text-decoration: none; /* Remove underline */
     color: #007bff; /* Link color */
     font-weight: bold; /* Bold text */
   }
 
-  .audio-link:hover {
+  .file-link:hover {
     text-decoration: underline; /* Underline on hover */
+  }
+
+  @media screen and (max-width: 768px) {
+    .file-card {
+      width: calc(100% - 20px); /* Full width for smaller screens */
+    }
   }
 </style>
 
 <main id="main">
   <div class="vertical-space">
-    <div class="card p-3">
+    <div class="card p-3 card-container">
       <!-- <div class="card-header">Download or Listen to these audio resources</div> -->
       <div class="container">
-        <div class="row audio-container" id="audio-container">
-          <!-- Audio resource cards will be dynamically generated here -->
+        <div class="row file-container" id="file-container">
+          <!-- File resource cards will be dynamically generated here -->
         </div>
       </div>
     </div>
@@ -63,8 +69,8 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const audioContainer = document.getElementById("audio-container");
-    const audioResources = [
+    const fileContainer = document.getElementById("file-container");
+    const fileResources = [
       {
         title: "Audio Menschen: A1",
         url: "{% url 'audio-menschen' %}?class_level=A1",
@@ -77,25 +83,28 @@
         title: "Audio Menschen: B1",
         url: "{% url 'audio-menschen' %}?class_level=B1",
       },
-      { title: "Grammatik Aktiv", url: "{% url 'audio-grammar' %}" },
+      {
+        title: "Grammatik Aktiv",
+        url: "{% url 'audio-grammar' %}",
+      },
     ];
 
-    audioResources.forEach((audio) => {
+    fileResources.forEach((file) => {
       const card = document.createElement("div");
-      card.classList.add("col-md-6", "audio-card");
+      card.classList.add("file-card");
 
       const title = document.createElement("div");
-      title.classList.add("audio-title");
-      title.textContent = audio.title;
+      title.classList.add("file-title");
+      title.textContent = file.title;
 
       const link = document.createElement("a");
-      link.href = audio.url;
-      link.classList.add("audio-link");
+      link.href = file.url;
+      link.classList.add("file-link");
       link.textContent = "Learn More";
 
       card.appendChild(title);
       card.appendChild(link);
-      audioContainer.appendChild(card);
+      fileContainer.appendChild(card);
     });
   });
 </script>

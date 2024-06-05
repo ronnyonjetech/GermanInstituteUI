@@ -1,52 +1,76 @@
 {% extends 'files_base.html' %} {% block content %}
 <style>
-  /* Custom styling for video cards */
-  .card-container {
-    max-width: 600px;
-    margin: 20px auto; /* Added margin to create space at the top */
+  /* Custom styling for file cards */
+  #main {
+    padding-top: 20px; /* Add some space at the top */
   }
-  .video-card {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+
+  .file-container {
+    display: flex; /* Use flexbox layout */
+    flex-wrap: wrap; /* Allow cards to wrap to the next line */
+    justify-content: center; /* Center align cards horizontally */
+    gap: 20px; /* Add space between cards */
+  }
+
+  .file-card {
+    width: calc(50% - 20px); /* Two cards per row */
+    max-width: 300px; /* Limit card width */
+    height: 200px;
+    background-color: #f8f9fa; /* Light background color */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     transition: transform 0.3s ease;
     cursor: pointer;
-    margin-bottom: 20px; /* Added margin-bottom to create space between cards */
   }
-  .video-card:hover {
-    transform: translateY(-5px);
+
+  .file-card:hover {
+    transform: translateY(-5px); /* Lift card up on hover */
   }
-  .video-card .card-body {
-    padding: 20px;
+
+  .file-title {
+    font-size: 1.2em; /* Title font size */
+    margin-bottom: 10px; /* Bottom margin for title */
   }
-  .video-card h3 {
-    font-size: 1.5em;
-    margin-bottom: 10px;
+
+  .file-link {
+    text-decoration: none; /* Remove underline */
+    color: #007bff; /* Link color */
+    font-weight: bold; /* Bold text */
   }
-  .video-card a {
-    display: block;
-    color: #007bff;
-    text-decoration: none;
-    font-weight: bold;
+
+  .file-link:hover {
+    text-decoration: underline; /* Underline on hover */
   }
-  .video-card a:hover {
-    text-decoration: underline;
+
+  @media screen and (max-width: 768px) {
+    .file-card {
+      width: calc(100% - 20px); /* Full width for smaller screens */
+    }
   }
 </style>
 
 <main id="main">
   <div class="vertical-space">
-    <div class="card p-3 card-container">
-      <div class="card-header">Download or View these video resources</div>
-      <div class="row" id="video-container"></div>
+    <div class="card p-3">
+      <!-- <div class="card-header">Download or view these files</div> -->
+      <div class="container">
+        <div class="row file-container" id="file-container">
+          <!-- File resource cards will be dynamically generated here -->
+        </div>
+      </div>
     </div>
   </div>
 </main>
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const videoContainer = document.getElementById("video-container");
-    const videos = [
+    const fileContainer = document.getElementById("file-container");
+    const fileResources = [
       {
         title: "Video Menschen: A1",
         url: "{% url 'video-menschen' %}?class_level=A1",
@@ -61,38 +85,22 @@
       },
     ];
 
-    videos.forEach((video) => {
+    fileResources.forEach((file) => {
       const card = document.createElement("div");
-      card.classList.add(
-        "col-md-6",
-        "my-3",
-        "wider-card",
-        "card-center",
-        "video-card"
-      );
+      card.classList.add("file-card");
 
-      const cardContent = document.createElement("div");
-      cardContent.classList.add("card-content");
-
-      const cardBody = document.createElement("div");
-      cardBody.classList.add("card-body");
-
-      const title = document.createElement("h3");
-      title.textContent = video.title;
+      const title = document.createElement("div");
+      title.classList.add("file-title");
+      title.textContent = file.title;
 
       const link = document.createElement("a");
-      link.href = video.url;
+      link.href = file.url;
+      link.classList.add("file-link");
       link.textContent = "Learn More";
-      link.style.display = "block";
-      link.style.color = "#007bff";
-      link.style.textDecoration = "none";
-      link.style.fontWeight = "bold";
 
-      cardBody.appendChild(title);
-      cardBody.appendChild(link);
-      cardContent.appendChild(cardBody);
-      card.appendChild(cardContent);
-      videoContainer.appendChild(card);
+      card.appendChild(title);
+      card.appendChild(link);
+      fileContainer.appendChild(card);
     });
   });
 </script>

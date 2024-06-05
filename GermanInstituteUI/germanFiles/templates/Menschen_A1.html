@@ -1,125 +1,112 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Menschen A1 Resources</title>
+{% extends 'files_base.html' %} {% load static %} {% block content %}
+<style>
+  .container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+  }
 
-    <!-- Font Awesome CDN -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
-    <style>
-      /* body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        color: #333;
-        margin: 0;
-        padding: 20px;
-      } */
+  .vertical-space {
+    margin: 40px 0;
+  }
 
-      h1,
-      h2 {
-        text-align: center;
-      }
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -10px;
+  }
 
-      .container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between; /* Distribute items evenly with equal space between them */
-        gap: 20px;
-        padding: 20px; /* Add padding to the container */
-        box-sizing: border-box; /* Include padding and border in the element's total width and height */
-      }
+  .col {
+    flex: 1;
+    max-width: 33.333%;
+    padding: 10px;
+    box-sizing: border-box;
+  }
 
-      .pdf-card {
-        /* Red background color */
-        /* background-color: #ff0000; */
-        color: black; /* White text color */
-        border-radius: 8px; /* Smaller border radius */
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        width: calc(33.33% - 20px); /* Adjusted width for smaller size */
-        max-width: 300px; /* Maximum width for larger screens */
-        padding: 15px; /* Reduced padding */
-        text-align: center;
-        transition: transform 0.2s;
-      }
+  .pdf-card {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 10px; /* Rounded edges */
+    padding: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    background-color: #fff; /* White background */
+  }
 
-      .pdf-card:hover {
-        transform: translateY(-5px);
-      }
+  .pdf-card:hover {
+    background-color: #f5f5f5;
+  }
 
-      .pdf-icon {
-        font-size: 2em;
-        margin-bottom: 10px;
-        color: red;
-      }
+  .pdf-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+    color: #007bff;
+  }
 
-      .pdf-title {
-        font-size: 1.1em; /* Adjusted font size */
-        margin: 8px 0; /* Reduced margin */
-        color: inherit; /* Inherit text color */
-        text-decoration: none; /* Remove underline */
-      }
+  .pdf-title {
+    font-size: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+  }
 
-      .pdf-date {
-        font-size: 0.9em;
-        margin-bottom: 12px; /* Reduced margin */
-        color: inherit; /* Inherit text color */
-      }
+  .pdf-date {
+    font-size: 0.9em;
+    margin-bottom: 15px;
+    color: #777;
+  }
 
-      a {
-        text-decoration: none;
-        color: inherit; /* Inherit text color */
-      }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
 
-      a:hover {
-        text-decoration: underline;
-      }
+  a:hover {
+    text-decoration: underline;
+  }
 
-      /* Responsive Styles */
-      @media screen and (max-width: 768px) {
-        .container {
-          justify-content: center; /* Center items on smaller screens */
-        }
+  /* Responsive Styles */
+  @media screen and (max-width: 768px) {
+    .col {
+      max-width: 50%;
+    }
+  }
 
-        .pdf-card {
-          width: calc(50% - 20px); /* Adjusted width for smaller screens */
-        }
-      }
+  @media screen and (max-width: 480px) {
+    .col {
+      max-width: 100%;
+    }
+  }
+</style>
 
-      @media screen and (max-width: 480px) {
-        .pdf-card {
-          width: calc(
-            100% - 20px
-          ); /* Adjusted width for even smaller screens */
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Menschen A1 Resources</h1>
-
-    {% if candidate %}
-    <p>Welcome, {{ candidate.name }}!</p>
-    {% else %}
-    <p>Welcome, guest!</p>
-    {% endif %}
-
-    <h2>PDF Resources</h2>
+<main id="main">
+  <div class="vertical-space">
     <div class="container">
-      {% for resource in pdf_resources %}
-      <div class="pdf-card">
-        <div class="pdf-icon">
-          <i class="fas fa-file-pdf"></i>
+      <h1>Menschen A1 Resources</h1>
+      <div class="row">
+        {% for resource in pdf_resources %}
+        <div class="col">
+          <div
+            class="pdf-card"
+            onclick="window.open('{{ resource.pdf_file.url }}', '_blank')"
+          >
+            <div class="pdf-icon">&#128462;</div>
+            <div class="pdf-title">{{ resource.title|truncatechars:20 }}</div>
+            <div class="pdf-date">{{ resource.upload_date }}</div>
+          </div>
         </div>
-        <a href="{{ resource.pdf_file.url }}" target="_blank" class="pdf-title"
-          >{{ resource.title }}</a
-        >
-        <div class="pdf-date">{{ resource.upload_date }}</div>
-        <!-- Ensure you have this field in your model -->
+        {% endfor %}
       </div>
-      {% endfor %}
+      {% if not pdf_resources %}
+      <p>No PDF files found for this resource.</p>
+      {% endif %}
     </div>
-  </body>
-</html>
+  </div>
+</main>
+{% endblock %}
