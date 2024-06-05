@@ -1,0 +1,102 @@
+{% extends 'files_base.html' %} {% block content %}
+<style>
+  /* Custom styling for audio cards */
+  #main {
+    padding-top: 20px; /* Add some space at the top */
+  }
+
+  .audio-container {
+    display: flex; /* Use flexbox layout */
+    flex-wrap: wrap; /* Allow cards to wrap to the next line */
+    justify-content: center; /* Center align cards horizontally */
+    gap: 20px; /* Add space between cards */
+  }
+
+  .audio-card {
+    width: 100%;
+    max-width: 400px; /* Limit card width */
+    height: 200px;
+    background-color: #f8f9fa; /* Light background color */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+
+  .audio-card:hover {
+    transform: translateY(-5px); /* Lift card up on hover */
+  }
+
+  .audio-title {
+    font-size: 1.2em; /* Title font size */
+    margin-bottom: 10px; /* Bottom margin for title */
+  }
+
+  .audio-link {
+    text-decoration: none; /* Remove underline */
+    color: #007bff; /* Link color */
+    font-weight: bold; /* Bold text */
+  }
+
+  .audio-link:hover {
+    text-decoration: underline; /* Underline on hover */
+  }
+</style>
+
+<main id="main">
+  <div class="vertical-space">
+    <div class="card p-3">
+      <!-- <div class="card-header">Download or Listen to these audio resources</div> -->
+      <div class="container">
+        <div class="row audio-container" id="audio-container">
+          <!-- Audio resource cards will be dynamically generated here -->
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const audioContainer = document.getElementById("audio-container");
+    const audioResources = [
+      {
+        title: "Audio Menschen: A1",
+        url: "{% url 'audio-menschen' %}?class_level=A1",
+      },
+      {
+        title: "Audio Menschen: A2",
+        url: "{% url 'audio-menschen' %}?class_level=A2",
+      },
+      {
+        title: "Audio Menschen: B1",
+        url: "{% url 'audio-menschen' %}?class_level=B1",
+      },
+      { title: "Grammatik Aktiv", url: "{% url 'audio-grammar' %}" },
+    ];
+
+    audioResources.forEach((audio) => {
+      const card = document.createElement("div");
+      card.classList.add("col-md-6", "audio-card");
+
+      const title = document.createElement("div");
+      title.classList.add("audio-title");
+      title.textContent = audio.title;
+
+      const link = document.createElement("a");
+      link.href = audio.url;
+      link.classList.add("audio-link");
+      link.textContent = "Learn More";
+
+      card.appendChild(title);
+      card.appendChild(link);
+      audioContainer.appendChild(card);
+    });
+  });
+</script>
+{% endblock %}

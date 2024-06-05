@@ -1,0 +1,109 @@
+{% extends 'files_base.html' %} {% block content %}
+<style>
+  /* Custom styling for file cards */
+  #main {
+    padding-top: 20px; /* Add some space at the top */
+    /* background: red; */
+  }
+
+  .file-container {
+    display: flex; /* Use flexbox layout */
+    flex-wrap: wrap; /* Allow cards to wrap to the next line */
+    justify-content: center; /* Center align cards horizontally */
+    gap: 20px; /* Add space between cards */
+  }
+
+  .file-card {
+    width: calc(50% - 20px); /* Two cards per row */
+    max-width: 300px; /* Limit card width */
+    height: 200px;
+    background-color: #f8f9fa; /* Light background color */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+
+  .file-card:hover {
+    transform: translateY(-5px); /* Lift card up on hover */
+  }
+
+  .file-title {
+    font-size: 1.2em; /* Title font size */
+    margin-bottom: 10px; /* Bottom margin for title */
+  }
+
+  .file-link {
+    text-decoration: none; /* Remove underline */
+    color: #007bff; /* Link color */
+    font-weight: bold; /* Bold text */
+  }
+
+  .file-link:hover {
+    text-decoration: underline; /* Underline on hover */
+  }
+
+  @media screen and (max-width: 768px) {
+    .file-card {
+      width: calc(100% - 20px); /* Full width for smaller screens */
+    }
+  }
+</style>
+
+<main id="main">
+  <div class="vertical-space">
+    <div class="card p-3">
+      <!-- <div class="card-header">Download or view these files</div> -->
+      <div class="container">
+        <div class="row file-container" id="file-container">
+          <!-- File resource cards will be dynamically generated here -->
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const fileContainer = document.getElementById("file-container");
+    const fileResources = [
+      {
+        title: "PDF Menschen: A1",
+        url: "{% url 'menschen_a1pdf' %}",
+      },
+      {
+        title: "PDF Menschen: A2",
+        url: "{% url 'menschen_a1pdf' %}",
+      },
+      {
+        title: "PDF Menschen: B1",
+        url: "{% url 'menschen_a1pdf' %}",
+      },
+      { title: "Grammatik Aktiv", url: "{% url 'menschen_a1pdf' %}" },
+    ];
+
+    fileResources.forEach((file) => {
+      const card = document.createElement("div");
+      card.classList.add("file-card");
+
+      const title = document.createElement("div");
+      title.classList.add("file-title");
+      title.textContent = file.title;
+
+      const link = document.createElement("a");
+      link.href = file.url;
+      link.classList.add("file-link");
+      link.textContent = "Learn More";
+
+      card.appendChild(title);
+      card.appendChild(link);
+      fileContainer.appendChild(card);
+    });
+  });
+</script>
+{% endblock %}

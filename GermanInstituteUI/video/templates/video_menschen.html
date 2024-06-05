@@ -1,0 +1,98 @@
+{% extends 'files_base.html' %} {% load static %} {% block content %}
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+  }
+
+  .vertical-space {
+    margin: 40px 0;
+  }
+
+  .wider-card {
+    width: 100%;
+    max-width: 1000px; /* Prevent cards from becoming too wide */
+    margin: auto;
+  }
+
+  .video-card {
+    margin-bottom: 20px;
+    border-radius: 8px; /* Rounded edges */
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .video-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .video-info {
+    padding: 20px;
+  }
+
+  .video-title {
+    font-size: 1.5em;
+    margin-bottom: 0.5em;
+  }
+
+  .video-link {
+    text-decoration: none;
+    color: #000;
+  }
+
+  .video-link:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<!-- Home page specific content here -->
+<main id="main">
+  <div class="vertical-space">
+    <div class="container">
+      <!-- Video Resource Containers -->
+      {% if video_resources %}
+      <div class="wider-card">
+        {% for video in video_resources %}
+        <div class="video-card">
+          <a
+            href="{{ video.video_file.url }}?menschen_id={{ video.id }}"
+            class="video-link"
+            target="_blank"
+          >
+            <!-- Assuming an image representation exists for each video file -->
+            <img
+              src="{% static 'img/german_flag.png' %}"
+              alt="Video File"
+              class="rounded img-fluid"
+            />
+          </a>
+          <div class="video-info">
+            <h5 class="video-title">
+              <a
+                href="{{ video.video_file.url }}?menschen_id={{ video.id }}"
+                class="video-link"
+                target="_blank"
+              >
+                {{ video.video }}
+              </a>
+            </h5>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <p>No details found for this resource.</p>
+      {% endif %}
+    </div>
+  </div>
+</main>
+{% endblock %}

@@ -1,0 +1,172 @@
+{% extends 'files_base.html' %} {% load static %} {% block content %}
+<style>
+  .container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+  }
+
+  .vertical-space {
+    margin: 40px 0;
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -10px;
+  }
+
+  .col {
+    flex: 1;
+    max-width: 33.333%;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .audio-card {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 10px; /* Rounded edges */
+    padding: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    background-color: #fff; /* White background */
+  }
+
+  .audio-card:hover {
+    background-color: #f5f5f5;
+  }
+
+  .audio-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+  }
+
+  .audio-title {
+    font-size: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    border-radius: 10px; /* Rounded edges */
+  }
+
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    font-weight: 400;
+    color: #fff;
+    text-align: center;
+    background-color: #007bff;
+    border: 1px solid transparent;
+    padding: 0.375rem 0.75rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+</style>
+
+<main id="main">
+  <div class="vertical-space">
+    <div class="container">
+      <h2>Audio Resources - Menschen</h2>
+      {% if audio_resources %}
+      <h4>Class Level: {{ class_level }}</h4>
+      <div class="row">
+        {% for file_name, file_path, audio_id in audio_files %}
+        <div class="col">
+          <div
+            class="audio-card"
+            onclick="openModal('audioModal{{ forloop.counter }}')"
+          >
+            <div class="audio-icon">&#127911;</div>
+            <div class="audio-title">{{ file_name|truncatechars:20 }}</div>
+          </div>
+          <!-- Audio Modal -->
+          <div id="audioModal{{ forloop.counter }}" class="modal">
+            <div class="modal-content">
+              <span
+                class="close"
+                onclick="closeModal('audioModal{{ forloop.counter }}')"
+                >&times;</span
+              >
+              <h5>{{ file_name }}</h5>
+              <audio controls>
+                <source
+                  src="{% url 'download_audio' audio_id=audio_id file_path=file_path %}"
+                  type="audio/mpeg"
+                />
+                Your browser does not support the audio element.
+              </audio>
+              <a
+                href="{% url 'download_audio' audio_id=audio_id file_path=file_path %}"
+                download="{{ file_name }}"
+                class="btn-primary mt-3"
+                >Download</a
+              >
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <p>No audio files found for this resource.</p>
+      {% endif %}
+    </div>
+  </div>
+</main>
+
+<script>
+  function openModal(modalId) {
+    document.getElementById(modalId).style.display = "block";
+  }
+
+  function closeModal(modalId) {
+    document.getElementById(modalId).style.display = "none";
+  }
+</script>
+{% endblock %}

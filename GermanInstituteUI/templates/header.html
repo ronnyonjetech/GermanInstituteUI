@@ -1,0 +1,353 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Header</h1>
+  </body>
+</html> -->
+<style>
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    padding: 10px 14px;
+    background: var(--sidebar-color);
+    transition: var(--tran-05);
+    z-index: 100;
+  }
+  .sidebar.close {
+    width: 88px;
+  }
+  .sidebar.close .text {
+    opacity: 0;
+  }
+  .sidebar li {
+    height: 50px;
+    /* background: red; */
+    margin-top: 10px;
+
+    list-style: none;
+    display: flex;
+    align-items: center;
+  }
+  .sidebar li .icon {
+    min-width: 60px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .sidebar li .icon,
+  .sidebar li .text {
+    color: var(--text-color);
+    transition: var(--tran-02);
+  }
+  .sidebar header {
+    position: relative;
+  }
+  .sidebar .image-text img {
+    width: 40px;
+    border-radius: 6px;
+  }
+  .sidebar header .image-text {
+    display: flex;
+    align-items: center;
+  }
+  /* Reusables */
+  .sidebar .text {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-color);
+    transition: var(--tran-04);
+    white-space: nowrap;
+    opacity: 1;
+  }
+  .sidebar .image {
+    min-width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  /* end of Reusables */
+  .sidebar .menu {
+    margin-top: 35px;
+  }
+  header .image-text .header-text {
+    display: flex;
+    flex-direction: column;
+  }
+  .header-text .name {
+    font-weight: 600;
+  }
+  .header-text .profession {
+    margin-top: -2px;
+  }
+  .sidebar header .toggle {
+    position: absolute;
+    top: 50%;
+    right: -25px;
+
+    height: 25px;
+    width: 25px;
+    background: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: var(--sidebar-color);
+    font-size: 22px;
+    transform: translateY(-50%) rotate(180deg);
+    transition: var(--tran-03);
+  }
+  .sidebar.close header .toggle {
+    transform: translateY(-50%);
+  }
+  .sidebar li a {
+    text-decoration: none;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    transition: var(--tran-04);
+  }
+  .sidebar li a:hover {
+    background: var(--primary-color);
+  }
+  .sidebar li a:hover .icon,
+  .sidebar li a:hover .text {
+    color: var(--sidebar-color);
+    /* cursor: pointer; */
+  }
+  body.dark .sidebar li a:hover .icon,
+  body.dark .sidebar li a:hover .text {
+    color: var(--text-color);
+    /* cursor: pointer; */
+  }
+  body.dark .sidebar header .toggle {
+    color: var(--text-color);
+  }
+  .sidebar .search-box {
+    background: var(--primary-color-light);
+    border-radius: 6px;
+    transition: var(--tran-05);
+  }
+  .search-box input {
+    height: 100%;
+    width: 100%;
+    background: var(--primary-color-light);
+    outline: none;
+    border: none;
+    border-radius: 6px;
+  }
+  .sidebar .menu-bar {
+    /* background: red; */
+    /* height: calc(100% - 40px); */
+    height: 87%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .menu-bar .mode {
+    background: var(--primary-color-light);
+    position: relative;
+    border-radius: 6px;
+  }
+  .menu-bar .mode i {
+    position: absolute;
+    transition: var(--tran-03);
+  }
+  .menu-bar .mode .moon-sun {
+    height: 50px;
+    width: 60px;
+    display: flex;
+    align-items: center;
+  }
+  .menu-bar .mode i.sun {
+    opacity: 0;
+  }
+  body.dark .menu-bar .mode i.sun {
+    opacity: 1;
+  }
+  body.dark .menu-bar .mode i.moon {
+    opacity: 0;
+  }
+  .menu-bar .mode .toggle-switch {
+    position: absolute;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-width: 60px;
+    cursor: pointer;
+    border-radius: 6px;
+    background: var(--primary-color-light);
+    transition: var(--tran-05);
+    /* background: red; */
+  }
+  .toggle-switch .switch {
+    position: relative;
+    border-radius: 25px;
+    height: 22px;
+    width: 44px;
+    background: var(--toggle-color);
+  }
+  .switch::before {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    height: 15px;
+    width: 15px;
+    background: var(--sidebar-color);
+    cursor: pointer;
+    transition: var(--tran-03);
+  }
+  body.dark .switch::before {
+    left: 20px;
+  }
+  body.dark {
+    --body-color: #18191a;
+    --sidebar-color: #242526;
+    --primary-color: #3a3b3c;
+    --primary-color-light: #3a3b3c;
+    --toggle-color: #fff;
+    --text-color: #ccc;
+  }
+  .home {
+    position: relative;
+    left: 250px;
+    height: 100vh;
+    width: calc(100% - 250px);
+    background: var(--body-color);
+    transition: var(--tran-05);
+  }
+  .home .text {
+    font-size: 30px;
+    font-weight: 500;
+    color: var(--text-color);
+    padding: 8px 40px;
+  }
+  .sidebar.close ~ .home {
+    left: 88px;
+    width: calc(100% - 88px);
+  }
+  /* Existing styles... */
+
+  /* Media query for screens smaller than 768px */
+  @media screen and (max-width: 768px) {
+    .sidebar {
+      width: 100%;
+      left: 0;
+      padding: 10px 0; /* Adjust padding for smaller screens */
+    }
+    .sidebar.close {
+      width: 0;
+      padding: 10px 0; /* Adjust padding for smaller screens */
+    }
+    .home {
+      left: 0;
+      width: 100%;
+    }
+  }
+
+  /* Media query for screens between 768px and 1024px */
+  @media screen and (min-width: 768px) and (max-width: 1024px) {
+    .sidebar {
+      width: 250px; /* Default width for larger screens */
+      left: 0;
+      padding: 10px 14px; /* Default padding for larger screens */
+    }
+    .sidebar.close {
+      width: 88px;
+    }
+    .home {
+      left: 250px; /* Adjust left position for larger screens */
+      width: calc(100% - 250px); /* Adjust width for larger screens */
+    }
+    .sidebar.close ~ .home {
+      left: 88px;
+      width: calc(100% - 88px);
+    }
+  }
+</style>
+<nav class="sidebar close">
+  <header>
+    <div class="image-text">
+      <span class="image">
+        <img
+          src="https://germaninstitute.co.ke/wp-content/uploads/2024/05/cropped-FAV-Icon-192x192.png"
+          alt="logo"
+        />
+      </span>
+      <div class="text header-text">
+        <span class="name">AG German Institute</span>
+        <span class="profession">Learn German</span>
+      </div>
+    </div>
+    <i class="bx bx-chevron-right toggle"></i>
+  </header>
+  <div class="menu-bar">
+    <div class="menu">
+      <!-- <li class="search-box">
+        <i class="bx bx-search-alt-2 icon"></i>
+        <input type="search" placeholder="Search ..." />
+      </li> -->
+      <ul class="menu-links">
+        <li class="nav-link">
+          <a href="{% url 'home' %}"
+            ><i class="bx bx-home-alt-2 icon"></i>
+            <span class="text nav-text">Dashboard</span></a
+          >
+        </li>
+        <li class="nav-link">
+          <a href="{% url 'landing' %}"
+            ><i class="bx bxs-file-doc icon"></i>
+            <span class="text nav-text">Documents</span></a
+          >
+        </li>
+        <!-- http://127.0.0.1:8000/video/download-video/ -->
+        <li class="nav-link">
+          <a href="{% url 'download-video' %}"
+            ><i class="bx bxs-videos icon"></i>
+            <span class="text nav-text">Videos</span></a
+          >
+        </li>
+        <!-- http://127.0.0.1:8000/audio/download-audio/ -->
+        <li class="nav-link">
+          <a href="{% url 'download-audio' %}"
+            ><i class="bx bx-volume-full icon"></i>
+            <span class="text nav-text">Audios</span></a
+          >
+        </li>
+      </ul>
+    </div>
+    <div class="bottom-content">
+      <li class="nav-link">
+        <a href="#"
+          ><i class="bx bx-log-out icon"></i>
+          <span class="text nav-text">Log Out</span></a
+        >
+      </li>
+      <li class="mode">
+        <div class="moon-sun">
+          <i class="bx bx-moon icon moon"></i>
+          <i class="bx bx-sun icon sun"></i>
+        </div>
+        <span class="mode-text text"> Dark Mode </span>
+        <div class="toggle-switch">
+          <span class="switch"></span>
+        </div>
+      </li>
+    </div>
+  </div>
+</nav>
+<!-- <script src="header_script.js"></script> -->

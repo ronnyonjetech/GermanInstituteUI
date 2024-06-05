@@ -1,0 +1,99 @@
+{% extends 'files_base.html' %} {% block content %}
+<style>
+  /* Custom styling for video cards */
+  .card-container {
+    max-width: 600px;
+    margin: 20px auto; /* Added margin to create space at the top */
+  }
+  .video-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    margin-bottom: 20px; /* Added margin-bottom to create space between cards */
+  }
+  .video-card:hover {
+    transform: translateY(-5px);
+  }
+  .video-card .card-body {
+    padding: 20px;
+  }
+  .video-card h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+  .video-card a {
+    display: block;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  .video-card a:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<main id="main">
+  <div class="vertical-space">
+    <div class="card p-3 card-container">
+      <div class="card-header">Download or View these video resources</div>
+      <div class="row" id="video-container"></div>
+    </div>
+  </div>
+</main>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const videoContainer = document.getElementById("video-container");
+    const videos = [
+      {
+        title: "Video Menschen: A1",
+        url: "{% url 'video-menschen' %}?class_level=A1",
+      },
+      {
+        title: "Video Menschen: A2",
+        url: "{% url 'video-menschen' %}?class_level=A2",
+      },
+      {
+        title: "Video Menschen: B1",
+        url: "{% url 'video-menschen' %}?class_level=B1",
+      },
+    ];
+
+    videos.forEach((video) => {
+      const card = document.createElement("div");
+      card.classList.add(
+        "col-md-6",
+        "my-3",
+        "wider-card",
+        "card-center",
+        "video-card"
+      );
+
+      const cardContent = document.createElement("div");
+      cardContent.classList.add("card-content");
+
+      const cardBody = document.createElement("div");
+      cardBody.classList.add("card-body");
+
+      const title = document.createElement("h3");
+      title.textContent = video.title;
+
+      const link = document.createElement("a");
+      link.href = video.url;
+      link.textContent = "Learn More";
+      link.style.display = "block";
+      link.style.color = "#007bff";
+      link.style.textDecoration = "none";
+      link.style.fontWeight = "bold";
+
+      cardBody.appendChild(title);
+      cardBody.appendChild(link);
+      cardContent.appendChild(cardBody);
+      card.appendChild(cardContent);
+      videoContainer.appendChild(card);
+    });
+  });
+</script>
+{% endblock %}

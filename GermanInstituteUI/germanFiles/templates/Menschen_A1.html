@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Menschen A1 Resources</title>
+
+    <!-- Font Awesome CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      /* body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+      } */
+
+      h1,
+      h2 {
+        text-align: center;
+      }
+
+      .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between; /* Distribute items evenly with equal space between them */
+        gap: 20px;
+        padding: 20px; /* Add padding to the container */
+        box-sizing: border-box; /* Include padding and border in the element's total width and height */
+      }
+
+      .pdf-card {
+        /* Red background color */
+        /* background-color: #ff0000; */
+        color: black; /* White text color */
+        border-radius: 8px; /* Smaller border radius */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        width: calc(33.33% - 20px); /* Adjusted width for smaller size */
+        max-width: 300px; /* Maximum width for larger screens */
+        padding: 15px; /* Reduced padding */
+        text-align: center;
+        transition: transform 0.2s;
+      }
+
+      .pdf-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .pdf-icon {
+        font-size: 2em;
+        margin-bottom: 10px;
+        color: red;
+      }
+
+      .pdf-title {
+        font-size: 1.1em; /* Adjusted font size */
+        margin: 8px 0; /* Reduced margin */
+        color: inherit; /* Inherit text color */
+        text-decoration: none; /* Remove underline */
+      }
+
+      .pdf-date {
+        font-size: 0.9em;
+        margin-bottom: 12px; /* Reduced margin */
+        color: inherit; /* Inherit text color */
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit; /* Inherit text color */
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      /* Responsive Styles */
+      @media screen and (max-width: 768px) {
+        .container {
+          justify-content: center; /* Center items on smaller screens */
+        }
+
+        .pdf-card {
+          width: calc(50% - 20px); /* Adjusted width for smaller screens */
+        }
+      }
+
+      @media screen and (max-width: 480px) {
+        .pdf-card {
+          width: calc(
+            100% - 20px
+          ); /* Adjusted width for even smaller screens */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Menschen A1 Resources</h1>
+
+    {% if candidate %}
+    <p>Welcome, {{ candidate.name }}!</p>
+    {% else %}
+    <p>Welcome, guest!</p>
+    {% endif %}
+
+    <h2>PDF Resources</h2>
+    <div class="container">
+      {% for resource in pdf_resources %}
+      <div class="pdf-card">
+        <div class="pdf-icon">
+          <i class="fas fa-file-pdf"></i>
+        </div>
+        <a href="{{ resource.pdf_file.url }}" target="_blank" class="pdf-title"
+          >{{ resource.title }}</a
+        >
+        <div class="pdf-date">{{ resource.upload_date }}</div>
+        <!-- Ensure you have this field in your model -->
+      </div>
+      {% endfor %}
+    </div>
+  </body>
+</html>
