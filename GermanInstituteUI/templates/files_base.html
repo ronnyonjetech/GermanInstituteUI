@@ -8,6 +8,12 @@
       rel="stylesheet"
     />
     <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMh1ZjDwoDXm34CjwE12HjoxaeI5dm0Pi6jizoM"
+      crossorigin="anonymous"
+    />
+    <link
       rel="icon"
       href="https://germaninstitute.co.ke/wp-content/uploads/2024/05/cropped-FAV-Icon-192x192.png"
       sizes="192x192"
@@ -52,7 +58,7 @@
       {% block content %} {% endblock %}
     </section>
 
-    <script>
+    <!-- <script>
       const body = document.querySelector("body"),
         sidebar = body.querySelector(".sidebar"),
         toggle = body.querySelector(".toggle"),
@@ -71,7 +77,41 @@
           modeText.innerText = "Dark Mode";
         }
       });
+    </script> -->
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const body = document.querySelector("body"),
+          sidebar = body.querySelector(".sidebar"),
+          toggle = body.querySelector(".toggle"),
+          modeSwitch = body.querySelector(".toggle-switch"),
+          modeText = body.querySelector(".mode-text");
+
+        const handleResize = () => {
+          if (window.innerWidth <= 768) {
+            sidebar.classList.add("close");
+          } else {
+            sidebar.classList.remove("close");
+          }
+        };
+
+        toggle.addEventListener("click", () => {
+          sidebar.classList.toggle("close");
+        });
+
+        modeSwitch.addEventListener("click", () => {
+          body.classList.toggle("dark");
+          modeText.innerText = body.classList.contains("dark")
+            ? "Light Mode"
+            : "Dark Mode";
+        });
+
+        // Initial check
+        handleResize();
+
+        // Check on resize
+        window.addEventListener("resize", handleResize);
+      });
     </script>
-    <!-- <script src="header_script.js"></script> -->
   </body>
 </html>

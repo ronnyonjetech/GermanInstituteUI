@@ -1,5 +1,5 @@
 {% extends 'files_base.html' %} {% load static %} {% block content %}
-<style>
+<!-- <style>
   body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -52,13 +52,13 @@
   .video-link:hover {
     text-decoration: underline;
   }
-</style>
+</style> -->
 
 <!-- Home page specific content here -->
-<main id="main">
+<!-- <main id="main">
   <div class="vertical-space">
     <div class="container">
-      <!-- Video Resource Containers -->
+   
       {% if video_resources %}
       <div class="wider-card">
         {% for video in video_resources %}
@@ -68,7 +68,7 @@
             class="video-link"
             target="_blank"
           >
-            <!-- Assuming an image representation exists for each video file -->
+          
             <img
               src="{% static 'img/german_flag.png' %}"
               alt="Video File"
@@ -91,6 +91,124 @@
       </div>
       {% else %}
       <p>No details found for this resource.</p>
+      {% endif %}
+    </div>
+  </div>
+</main> -->
+<style>
+  .container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+  }
+
+  .vertical-space {
+    margin: 40px 0;
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -10px;
+  }
+
+  .col {
+    flex: 1;
+    max-width: 33.333%;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .video-card {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    /* border: 1px solid #ccc;
+    border-radius: 10px;  */
+    /* Rounded edges */
+    border: none;
+    padding: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    /* background-color: #fff;  */
+    background-color: var(--body-color);
+    /* White background */
+  }
+
+  .video-card:hover {
+    /* background-color: #f5f5f5; */
+    background-color: var(--body-color);
+  }
+
+  .video-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+  }
+  body.dark .video-icon {
+    color: lightgreen;
+  }
+  body.dark h1 {
+    color: lightgreen;
+  }
+  .video-title {
+    font-size: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+  }
+  body.dark .video-title {
+    color: lightgreen;
+  }
+  .video-link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .video-link:hover {
+    text-decoration: underline;
+  }
+
+  /* Responsive Styles */
+  @media screen and (max-width: 768px) {
+    .col {
+      max-width: 50%;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .col {
+      max-width: 100%;
+    }
+  }
+</style>
+
+<main id="main">
+  <div class="vertical-space">
+    <div class="container">
+      <h1>Menschen A1 Video Resources</h1>
+      <br /><br />
+      <div class="row">
+        {% for video in video_resources %}
+        <div class="col">
+          <div
+            class="video-card"
+            onclick="window.open('{{ video.video_file.url }}?menschen_id={{ video.id }}', '_blank')"
+          >
+            <div class="video-icon">
+              <i class="bx bx-movie-play"></i>
+            </div>
+            <div class="video-title">{{ video.video }}</div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% if not video_resources %}
+      <p>No video files found for this resource.</p>
       {% endif %}
     </div>
   </div>

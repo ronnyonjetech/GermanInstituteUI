@@ -31,16 +31,20 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    border: 1px solid #ccc;
-    border-radius: 10px; /* Rounded edges */
+    /* border: 1px solid #ccc;
+    border-radius: 10px;  */
+    border: none;
+    /* Rounded edges */
     padding: 20px;
     cursor: pointer;
     transition: background-color 0.3s;
-    background-color: #fff; /* White background */
+    /* background-color: #fff; */
+    /* White background */
+    background-color: var(--body-color);
   }
 
   .audio-card:hover {
-    background-color: #f5f5f5;
+    background-color: var(--body-color);
   }
 
   .audio-icon {
@@ -108,6 +112,12 @@
   .btn-primary:hover {
     background-color: #0056b3;
   }
+  body.dark h2 {
+    color: lightgreen;
+  }
+  body.dark .audio-title {
+    color: lightgreen;
+  }
 </style>
 
 <main id="main">
@@ -115,7 +125,7 @@
     <div class="container">
       <h2>Audio Resources - Menschen</h2>
       {% if audio_resources %}
-      <h4>Class Level: {{ class_level }}</h4>
+      <!-- <h4>Class Level: {{ class_level }}</h4> -->
       <div class="row">
         {% for file_name, file_path, audio_id in audio_files %}
         <div class="col">

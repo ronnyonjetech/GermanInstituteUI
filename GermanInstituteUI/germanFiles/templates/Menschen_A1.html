@@ -30,22 +30,33 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    border: 1px solid #ccc;
-    border-radius: 10px; /* Rounded edges */
+    /* border: 1px solid #ccc;
+    border-radius: 10px;  */
+    border: none;
+    /* Rounded edges */
     padding: 20px;
     cursor: pointer;
     transition: background-color 0.3s;
-    background-color: #fff; /* White background */
+    /* background-color: #fff; */
+    background-color: var(--body-color);
+    /* White background */
   }
 
   .pdf-card:hover {
-    background-color: #f5f5f5;
+    /* background-color: #f5f5f5; */
+    background-color: var(--body-color);
   }
 
   .pdf-icon {
     font-size: 64px;
     margin-bottom: 20px;
     color: #007bff;
+  }
+  body.dark .pdf-icon {
+    color: lightgreen;
+  }
+  body.dark h1 {
+    color: lightgreen;
   }
 
   .pdf-title {
@@ -55,7 +66,9 @@
     white-space: nowrap;
     max-width: 100%;
   }
-
+  body.dark .pdf-title {
+    color: lightgreen;
+  }
   .pdf-date {
     font-size: 0.9em;
     margin-bottom: 15px;

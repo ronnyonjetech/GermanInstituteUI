@@ -1,5 +1,5 @@
-{% extends 'files_base.html' %} {% block content %}
-<style>
+{% extends 'files_base.html' %}{%load static%} {% block content %}
+<!-- <style>
   /* Custom styling for audio cards */
   #main {
     padding-top: 20px; /* Add some space at the top */
@@ -52,22 +52,22 @@
       width: calc(100% - 20px); /* Full width for smaller screens */
     }
   }
-</style>
+</style> -->
 
-<main id="main">
+<!-- <main id="main">
   <div class="vertical-space">
     <div class="card p-3 card-container">
-      <!-- <div class="card-header">Download or Listen to these audio resources</div> -->
+      
       <div class="container">
         <div class="row file-container" id="file-container">
-          <!-- File resource cards will be dynamically generated here -->
+          
         </div>
       </div>
     </div>
   </div>
-</main>
+</main> -->
 
-<script>
+<!-- <script>
   document.addEventListener("DOMContentLoaded", function () {
     const fileContainer = document.getElementById("file-container");
     const fileResources = [
@@ -107,5 +107,270 @@
       fileContainer.appendChild(card);
     });
   });
-</script>
+</script> -->
+<style>
+  .container {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    gap: 50px;
+    padding: 50px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+
+  .container .card {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    height: 300px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 35px 80px rgba(0, 0, 0, 0.15);
+    transition: 0.5s;
+  }
+
+  .container .card:hover {
+    height: 400px;
+  }
+
+  .container .card .imgBx {
+    position: absolute;
+    top: 20px;
+    width: 90%;
+    height: 220px;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 12px;
+    transition: 0.5s;
+  }
+
+  .container .card:hover .imgBx {
+    top: -100px;
+    transform: scale(0.75);
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.2);
+  }
+
+  .container .card .imgBx img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .container .card .content {
+    position: absolute;
+    width: 100%;
+    top: 252px;
+    padding: 0 30px;
+    height: 35px;
+    overflow: hidden;
+    text-align: center;
+    transition: 0.5s;
+  }
+
+  .container .card:hover .content {
+    top: 130px;
+    height: 250px;
+  }
+
+  .container .card .content h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-color);
+  }
+
+  .container .card .content p {
+    color: var(--text-color);
+  }
+
+  .container .card .content a {
+    position: relative;
+    top: 15px;
+    display: inline-block;
+    padding: 12px 25px;
+    background: var(--primary-color);
+    color: #fff;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 8px;
+  }
+
+  /* Media Queries for Responsiveness */
+  @media (max-width: 1200px) {
+    .container {
+      gap: 40px;
+      padding: 40px;
+    }
+
+    .container .card {
+      height: 280px;
+    }
+
+    .container .card:hover {
+      height: 380px;
+    }
+
+    .container .card .imgBx {
+      height: 200px;
+    }
+
+    .container .card:hover .imgBx {
+      top: -90px;
+    }
+
+    .container .card .content {
+      top: 232px;
+    }
+
+    .container .card:hover .content {
+      top: 110px;
+      height: 220px;
+    }
+  }
+
+  @media (max-width: 992px) {
+    .container {
+      gap: 30px;
+      padding: 30px;
+    }
+
+    .container .card {
+      height: 260px;
+    }
+
+    .container .card:hover {
+      height: 360px;
+    }
+
+    .container .card .imgBx {
+      height: 180px;
+    }
+
+    .container .card:hover .imgBx {
+      top: -80px;
+    }
+
+    .container .card .content {
+      top: 212px;
+    }
+
+    .container .card:hover .content {
+      top: 100px;
+      height: 200px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .container .card {
+      height: 240px;
+    }
+
+    .container .card:hover {
+      height: 340px;
+    }
+
+    .container .card .imgBx {
+      height: 160px;
+    }
+
+    .container .card:hover .imgBx {
+      top: -70px;
+    }
+
+    .container .card .content {
+      top: 192px;
+    }
+
+    .container .card:hover .content {
+      top: 90px;
+      height: 180px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .container {
+      gap: 15px;
+      padding: 15px;
+      grid-template-columns: 1fr;
+    }
+
+    .container .card {
+      height: 220px;
+    }
+
+    .container .card:hover {
+      height: 320px;
+    }
+
+    .container .card .imgBx {
+      height: 140px;
+    }
+
+    .container .card:hover .imgBx {
+      top: -60px;
+    }
+
+    .container .card .content {
+      top: 172px;
+    }
+
+    .container .card:hover .content {
+      top: 80px;
+      height: 160px;
+    }
+  }
+</style>
+<div class="container">
+  <div class="card" style="--clr: #009688">
+    <div class="imgBx">
+      <img src="{% static 'images/gflag.svg' %}" alt="Logo" />
+    </div>
+    <div class="content">
+      <h2>Audio Menschen: A1</h2>
+      <p>Audio Menschen A1</p>
+      <a href="{% url 'audio-menschen' %}?class_level=A1">Listen Audio</a>
+    </div>
+  </div>
+  <div class="card" style="--clr: #009688">
+    <div class="imgBx">
+      <img src="{% static 'images/gflag.svg' %}" alt="Logo" />
+    </div>
+    <div class="content">
+      <h2>Audio Menschen: A2</h2>
+      <p>Audio Menschen A2.</p>
+      <a href="{% url 'audio-menschen' %}?class_level=A2">Listen Audio</a>
+    </div>
+  </div>
+
+  <div class="card" style="--clr: #009688">
+    <div class="imgBx">
+      <img src="{% static 'images/gflag.svg' %}" alt="Logo" />
+    </div>
+    <div class="content">
+      <h2>Audio Menschen: B1</h2>
+      <p>Audio Menschen: B1</p>
+      <a href="{% url 'audio-menschen' %}?class_level=B1">Listen Audio</a>
+    </div>
+  </div>
+  <div class="card" style="--clr: #009688">
+    <div class="imgBx">
+      <img src="{% static 'images/gflag.svg' %}" alt="Logo" />
+    </div>
+    <div class="content">
+      <h2>Grammatik Aktiv</h2>
+      <p>Grammatik Aktiv</p>
+      <a href="{% url 'audio-grammar' %}">Listen Audio</a>
+    </div>
+  </div>
+</div>
 {% endblock %}
