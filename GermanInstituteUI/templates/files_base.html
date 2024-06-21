@@ -79,7 +79,7 @@
       });
     </script> -->
 
-    <script>
+    <!-- <script>
       document.addEventListener("DOMContentLoaded", () => {
         const body = document.querySelector("body"),
           sidebar = body.querySelector(".sidebar"),
@@ -110,6 +110,64 @@
         handleResize();
 
         // Check on resize
+        window.addEventListener("resize", handleResize);
+      });
+    </script> -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const body = document.querySelector("body"),
+          sidebar = body.querySelector(".sidebar"),
+          toggle = body.querySelector(".toggle"),
+          modeSwitch = body.querySelector(".toggle-switch"),
+          modeText = body.querySelector(".mode-text");
+
+        // Function to handle resize event
+        const handleResize = () => {
+          if (window.innerWidth <= 768) {
+            sidebar.classList.add("close");
+          } else {
+            sidebar.classList.remove("close");
+          }
+        };
+
+        // Function to handle sidebar toggle
+        const toggleSidebar = () => {
+          sidebar.classList.toggle("close");
+          localStorage.setItem(
+            "sidebarState",
+            sidebar.classList.contains("close") ? "closed" : "open"
+          );
+        };
+
+        // Function to handle mode switch
+        const toggleMode = () => {
+          body.classList.toggle("dark");
+          modeText.innerText = body.classList.contains("dark")
+            ? "Light Mode"
+            : "Dark Mode";
+          localStorage.setItem(
+            "mode",
+            body.classList.contains("dark") ? "dark" : "light"
+          );
+        };
+
+        // Check the stored values and apply them
+        if (localStorage.getItem("sidebarState") === "closed") {
+          sidebar.classList.add("close");
+        }
+        if (localStorage.getItem("mode") === "dark") {
+          body.classList.add("dark");
+          modeText.innerText = "Light Mode";
+        } else {
+          modeText.innerText = "Dark Mode";
+        }
+
+        // Initial check for window size
+        handleResize();
+
+        // Add event listeners
+        toggle.addEventListener("click", toggleSidebar);
+        modeSwitch.addEventListener("click", toggleMode);
         window.addEventListener("resize", handleResize);
       });
     </script>

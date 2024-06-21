@@ -26,7 +26,6 @@ urlpatterns = [
     path('files/',include('germanFiles.urls')),
     path('',include('home.urls')),
     path('pdfs/',include('germanFiles.urls'))
-
 ]
 
 if settings.DEBUG:
